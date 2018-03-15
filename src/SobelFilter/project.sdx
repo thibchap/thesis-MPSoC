@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ASCII"?>
+<sdsproject:SDSProject xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdsproject="http://www.xilinx.com/sdsproject" name="SobelFilter" location="E:/SD4/SobelFilter" platform="E:\Documents\MSE_Travail\TM_MPSoC\workspace\SDSoC_pfm\ultrazed_dp_sds\ultrazed_dp_sds.xpfm" platformUID="Hes-so:ultrazed_eg_iocc_production:ultrazed_dp_sds:1.0(custom)" sysConfig="linux_0" runtime="C/C++" cpu="a53_0" cpuInstance="psu_cortexa53_0" os="linux" ConfigType="Debug">
+  <configuration name="Debug" id="com.xilinx.sdsoc.managedbuild.project.debug.1732517286">
+    <configBuildOptions xsi:type="sdsproject:Option" insertapm="false" genbitstream="true" gensdcard="true" dmclkid="0" enableHwSwTrace="false" traceApplication="false" genEmulationModel="false"/>
+  </configuration>
+  <configuration name="Release" id="com.xilinx.sdsoc.managedbuild.project.release.2117914955">
+    <configBuildOptions xsi:type="sdsproject:Option" insertapm="false" genbitstream="true" gensdcard="true" dmclkid="3" enableHwSwTrace="false" traceApplication="false" genEmulationModel="false">
+      <accelerator name="Sobel" filepath="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_sobel.hpp" clkid="3" location="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_sobel.hpp"/>
+    </configBuildOptions>
+    <lastBuildOptions xsi:type="sdsproject:Option" insertapm="false" genbitstream="true" gensdcard="true" dmclkid="3" enableHwSwTrace="false" traceApplication="false" genEmulationModel="false">
+      <accelerator name="Sobel" filepath="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_sobel.hpp" clkid="3" location="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_sobel.hpp"/>
+    </lastBuildOptions>
+  </configuration>
+</sdsproject:SDSProject>

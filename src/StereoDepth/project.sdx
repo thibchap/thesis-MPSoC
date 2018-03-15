@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ASCII"?>
+<sdsproject:SDSProject xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdsproject="http://www.xilinx.com/sdsproject" name="StereoDepth" location="E:/SDx1/StereoDepth" platform="E:\Documents\MSE_Travail\TM_MPSoC\workspace\SDSoC_pfm\ultrazed_dp_sds\ultrazed_dp_sds.xpfm" platformUID="Hes-so:ultrazed_eg_iocc_production:ultrazed_dp_sds:1.0(custom)" sysConfig="linux_0" runtime="C/C++" cpu="a53_0" cpuInstance="psu_cortexa53_0" os="linux" ConfigType="Debug">
+  <configuration name="Debug" id="com.xilinx.sdsoc.managedbuild.project.debug.1511588462">
+    <configBuildOptions xsi:type="sdsproject:Option" insertapm="false" genbitstream="true" gensdcard="true" dmclkid="1" enableHwSwTrace="false" traceApplication="false" genEmulationModel="false">
+      <accelerator name="StereoBM" filepath="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_stereoBM.hpp" clkid="1" location="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_stereoBM.hpp"/>
+      <accelerator name="InitUndistortRectifyMapInverse" filepath="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_stereo_pipeline.hpp" clkid="1" location="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_stereo_pipeline.hpp"/>
+      <accelerator name="remap" filepath="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_remap.hpp" clkid="1" location="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_remap.hpp"/>
+    </configBuildOptions>
+    <lastBuildOptions xsi:type="sdsproject:Option" insertapm="false" genbitstream="true" gensdcard="true" dmclkid="1" enableHwSwTrace="false" traceApplication="false" genEmulationModel="false">
+      <accelerator name="StereoBM" filepath="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_stereoBM.hpp" clkid="1" location="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_stereoBM.hpp"/>
+      <accelerator name="InitUndistortRectifyMapInverse" filepath="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_stereo_pipeline.hpp" clkid="1" location="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_stereo_pipeline.hpp"/>
+      <accelerator name="remap" filepath="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_remap.hpp" clkid="1" location="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_remap.hpp"/>
+    </lastBuildOptions>
+  </configuration>
+  <configuration name="Release" id="com.xilinx.sdsoc.managedbuild.project.release.1637338555">
+    <configBuildOptions xsi:type="sdsproject:Option" insertapm="false" genbitstream="true" gensdcard="true" dmclkid="1" enableHwSwTrace="false" traceApplication="false" genEmulationModel="false">
+      <accelerator name="StereoBM" filepath="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_stereoBM.hpp" clkid="1" location="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_stereoBM.hpp"/>
+      <accelerator name="InitUndistortRectifyMapInverse" filepath="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_stereo_pipeline.hpp" clkid="1" location="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_stereo_pipeline.hpp"/>
+      <accelerator name="remap" filepath="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_remap.hpp" clkid="1" location="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_remap.hpp"/>
+    </configBuildOptions>
+    <lastBuildOptions xsi:type="sdsproject:Option" insertapm="false" genbitstream="true" gensdcard="true" dmclkid="1" enableHwSwTrace="false" traceApplication="false" genEmulationModel="false">
+      <accelerator name="StereoBM" filepath="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_stereoBM.hpp" clkid="1" location="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_stereoBM.hpp"/>
+      <accelerator name="InitUndistortRectifyMapInverse" filepath="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_stereo_pipeline.hpp" clkid="1" location="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_stereo_pipeline.hpp"/>
+      <accelerator name="remap" filepath="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_remap.hpp" clkid="1" location="C:/Xilinx/SDx/xfopencv/include/imgproc/xf_remap.hpp"/>
+    </lastBuildOptions>
+  </configuration>
+</sdsproject:SDSProject>
