@@ -21,7 +21,7 @@ Graphics3D::Graphics3D(const int width, const int height)
 	//esContext.userData = &userData;	// bind userData to esContext
 
 	// 2. Create a window
-	esCreateWindow(&esContext, "OpenGL ES Window", 1920, 1200, ES_WINDOW_RGB);
+	esCreateWindow(&esContext, "OpenGL ES Window", width, height, ES_WINDOW_RGB);
 
 	// 3. Initialize the context and userData
 	Init();
@@ -40,7 +40,7 @@ void Graphics3D::Init() {
 
 	// Get location of the attributes after the shader is linked
 	a_position = glGetAttribLocation(programID, "a_position");
-	a_texcoord = glGetAttribLocation(programID, "a_texcoord");
+//	a_texcoord = glGetAttribLocation(programID, "a_texcoord");
 	if(NB_TEXTURE > 1)
 		texSelect = glGetUniformLocation(programID, "u_texSelect");
 	u_mvp = glGetUniformLocation(programID, "u_mvp");
@@ -54,18 +54,19 @@ void Graphics3D::Init() {
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	const GLuint POS_SIZE = 3;		// position is 3 dimensions
-	const GLuint TEXCOORD_SIZE = 2;	// texcoord is 2 dimensions
-	const GLuint STRIDE = (POS_SIZE + TEXCOORD_SIZE) * sizeof(GLfloat);	// stride in bytes between each attribute
+//	const GLuint TEXCOORD_SIZE = 2;	// texcoord is 2 dimensions
+//	const GLuint STRIDE = (POS_SIZE + TEXCOORD_SIZE) * sizeof(GLfloat);	// stride in bytes between each attribute
+	const GLuint STRIDE = (POS_SIZE) * sizeof(GLfloat);	// stride in bytes between each attribute
 	size_t offset = 0;
 
 	// position attribute
 	glVertexAttribPointer(a_position, 3, GL_FLOAT, GL_FALSE, STRIDE, (void*)offset);
 	glEnableVertexAttribArray(a_position);
 	offset += POS_SIZE * sizeof(float);
-	// texture attribute
-	glVertexAttribPointer(a_texcoord, 2, GL_FLOAT, GL_FALSE, STRIDE, (void*)offset);
-	glEnableVertexAttribArray(a_texcoord);
-	offset += TEXCOORD_SIZE * sizeof(float);
+	// texture attribute ---> NO LONGER NEEDED (see shader)
+//	glVertexAttribPointer(a_texcoord, 2, GL_FLOAT, GL_FALSE, STRIDE, (void*)offset);
+//	glEnableVertexAttribArray(a_texcoord);
+//	offset += TEXCOORD_SIZE * sizeof(float);
 
 	// texture configuration
 	for(int i = 0; i < NB_TEXTURE; i++) {
@@ -110,7 +111,7 @@ void Graphics3D::Init() {
 
 
 void Graphics3D::drawPoints(cv::Mat& disp, cv::Mat& im, float coef) {
-	generatePointCloud(disp, vertices, -5.0f, coef);
+	generatePointCloud(disp, vertices, -10000.0f, coef);
 	// Set the viewport
 	glViewport(0, 0, esContext.width, esContext.height);
 	// Use the program object
@@ -140,9 +141,11 @@ void Graphics3D::drawPoints(cv::Mat& disp, cv::Mat& im, float coef) {
 	}
 
 	glm::mat4 transform;
+	float ratio = disp.rows / (float)disp.cols;
+	glm::mat4 model = glm::scale(glm::mat4(1.0), glm::vec3(5.0f, 5.0f * ratio, 5.0f));
 	glm::mat4 view = camera.GetViewMatrix();
 	glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)esContext.width / (float)esContext.height, 0.1f, 100.0f);
-	transform = projection * view;
+	transform = projection * view * model;
 	glUniformMatrix4fv(u_mvp, 1, GL_FALSE, glm::value_ptr(transform));
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -160,32 +163,45 @@ void Graphics3D::drawPoints(cv::Mat& disp, cv::Mat& im, float coef) {
 void Graphics3D::generatePointCloud(cv::Mat& im, GLfloat* vertices, const float maxZ, const float coef) {
 	const int H = im.rows;
 	const int W = im.cols;
-	const int NB_ATTRIB = 5;
-	if (vertices==nullptr or indices==nullptr) {
+	const float H_f = (float) -H;
+	const float W_f = (float) W;
+	const int NB_ATTRIB = 3; // 5; ////////////// TEST
+	uint s, _s;
+
+	if (vertices == nullptr or indices == nullptr) {
 		std::cerr << "[Graphics3D] Error vertices pointer invalid" << std::endl;
 		return;
 	}
 
-	const float scaleFactor = 5.0f;
-	//const float baseline = 120.0f / 2.0E4f;
-	//const float focal = 2.8f;
-	uint s, _s;
+	// Init x and y coordinates, only once
+	static bool init = true;
+	if (init) {
+		init = false;
+#if !__SDSCC__
+#pragma omp parallel for collapse(2)
+#endif
+		for (int i = 0; i < H; i++) {
+			for (int j = 0; j < W; j++) {
+				s = (i * W + j) * NB_ATTRIB;
+				vertices[s] = j / W_f;		// pos x
+				vertices[s + 1] = i / H_f;		// pos y
+			}
+		}
+	}
+
+	// Set depth values (inverse of disparity)
+#if !__SDSCC__
+#pragma omp parallel for collapse(2)
+#endif
 	for (int i = 0; i < H; i++) {
 		for (int j = 0; j < W; j++) {
 			_s = (i * W + j);
 			s = _s * NB_ATTRIB;
-			vertices[s] = j / (float)W * scaleFactor;		// pos x		// TODO ne faire ça qu'une fois !
-			vertices[s + 1] = -i / (float)W * scaleFactor;		// pos y	// TODO ne faire ça qu'une fois !
-			//float disp = im.data[_s] / 255.0f * scaleFactor;		// disparity
-			float disp = ((int16_t*)im.data)[_s] * coef;		// disparity
-			if (disp > 0.0f) {
-				vertices[s + 2] = -30.0f / disp * scaleFactor;	// pos z
+			float disp = ((int16_t*)im.data)[_s];		// disparity
+			vertices[s + 2] = maxZ;
+			if (disp > 50.0f) {
+				vertices[s + 2] = -180.0f / disp;	// pos z
 			}
-			else {
-				vertices[s + 2] = -maxZ;	// pos z
-			}
-			vertices[s + 3] = j / (float)W;						// tex u	// TODO combiner avec pos x
-			vertices[s + 4] = i / (float)H;						// tex v	// TODO combiner avec pos y
 		}
 	}
 }

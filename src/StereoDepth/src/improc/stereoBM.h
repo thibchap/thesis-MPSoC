@@ -24,7 +24,7 @@ bool initStereoBM(cv::Ptr<cv::StereoBM>& sbm) {
 	int preFilterCap = 31; //63;
 	//int preFilterSize = 5;
 	int textureThreshold = 20;//20;
-	int uniquenessRatio = 15;//13;
+	int uniquenessRatio = 10;//13;
 	//int speckleRange = 8;
 	//int disp12MaxDiff = -1;
 

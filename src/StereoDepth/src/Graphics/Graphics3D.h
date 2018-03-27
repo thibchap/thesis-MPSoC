@@ -90,7 +90,7 @@ private:
 
 	const char* vertShaderSrc = "precision mediump float;\n"
 			"attribute vec3 a_position;\n"
-			"attribute vec2 a_texcoord;\n"
+			//"attribute vec2 a_texcoord;\n"
 			"varying vec2 v_texcoord;\n"
 			"uniform mat4 u_mvp;\n"
 			"\n"
@@ -98,7 +98,8 @@ private:
 			"{\n"
 			"    gl_Position = u_mvp * vec4(a_position, 1.0);\n"
 			"    gl_PointSize = 10.0 / gl_Position.z;\n"
-			"    v_texcoord= a_texcoord;\n"
+			//"    v_texcoord= a_texcoord;\n"
+			"    v_texcoord= vec2(a_position.x, -a_position.y);\n"
 			"}";
 	const char* fragShaderSrc = "precision mediump float;\n"
 			"varying vec2 v_texcoord;\n"

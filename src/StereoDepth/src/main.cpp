@@ -139,7 +139,7 @@ int main(int argc, char** argv)
 	// Set stereo BM state (config)
 	xf::xFSBMState<SAD_WINDOW_SIZE,NO_OF_DISPARITIES,PARALLEL_UNITS> bm_state;
 	bm_state.preFilterCap = 31;//61;
-	bm_state.uniquenessRatio = 15; //10;
+	bm_state.uniquenessRatio = 10; //10;
 	bm_state.textureThreshold = 20; //200;
 	bm_state.minDisparity = 0;
 
